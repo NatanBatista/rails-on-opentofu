@@ -1,7 +1,7 @@
 # VPC ID
 output "vpc_id" {
   description = "The ID of the Rails VPC"
-  value = aws_vpc.this
+  value = aws_vpc.this.id
 }
 
 # Subnets públicas IDs
