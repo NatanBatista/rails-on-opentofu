@@ -33,3 +33,40 @@ variable "availability_zones" {
     type        = list(string)
     default     = ["us-east-1a", "us-east-1b"]
 }
+
+variable "sg_name" {
+    description = "The name of the security group."
+    type        = string
+    default     = "rails-lb-sg"
+  
+}
+
+variable "balancer_name" {
+  description = "Name of Load balancer"
+  type = string
+  default = "rails-lb"
+}
+
+variable "internal" {
+  description = "If load balancer is internal"
+  type = bool
+  default = false
+}
+
+variable "load_balancer_type" {
+  description = "Type of load balancer"
+  type = string
+  default = "application"
+}
+
+variable "tags" {
+  description = "Tags for load balancer"
+  type = map(string)
+  default = {}
+}
+
+variable "enable_deletion_protection" {
+  description = "Habilita proteção contra exclusão"
+  type        = bool
+  default     = false
+}
