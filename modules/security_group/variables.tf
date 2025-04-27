@@ -10,8 +10,9 @@ variable "security_groups" {
     security_group_name = string
     ingress_from_port   = number
     ingress_to_port     = number
-    protocol            = string
+    ingress_protocol    = string
     cidr_blocks         = list(string)
+    security_groups     = list(string)
     egress_from_port    = number
     egress_to_port      = number
     egress_protocol     = string
