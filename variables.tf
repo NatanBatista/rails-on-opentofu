@@ -70,3 +70,17 @@ variable "enable_deletion_protection" {
   type        = bool
   default     = false
 }
+
+variable "rails_master_key" {
+  description = "Rails master key"
+  type        = string
+  sensitive   = true
+  default = ""
+}
+
+variable "container_image" {
+  description = "Imagem do container"
+  type        = string
+  default     = "rails:latest"
+}
+

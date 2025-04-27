@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "this" {
     environment = [
       {
         "name": "RAILS_MASTER_KEY",
-        "value": "b2b19cd4ec02d8c54bf165fda78bae7c"
+        "value": var.rails_master_key
       },
     ]
   }])

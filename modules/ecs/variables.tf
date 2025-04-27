@@ -73,3 +73,9 @@ variable "target_group_arn" {
   description = "ARN of the target group for the ECS service"
   type        = string
 }
+
+variable "rails_master_key" {
+  description = "Rails master key"
+  type        = string
+  sensitive   = true
+}

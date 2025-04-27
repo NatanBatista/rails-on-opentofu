@@ -83,7 +83,8 @@ module "ecs" {
   execution_role_arn  = data.aws_iam_role.LabRole.arn
   # task_role_arn       = aws_iam_role.ecs_execution_role.arn
   container_name      = "rails-tofu-container"
-  container_image     = "171562142676.dkr.ecr.us-east-1.amazonaws.com/natanbatista/rails-on-terraform"
+  container_image     = var.container_image
+  rails_master_key    = var.rails_master_key
   cpu                 = "256"
   memory              = "512"
   service_name        = "rails-tofu-service"
