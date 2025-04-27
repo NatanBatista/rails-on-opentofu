@@ -35,3 +35,9 @@ variable "enable_deletion_protection" {
   type        = bool
   default     = false
 }
+
+variable "vpc_id" {
+  description = "ID do VPC"
+  type        = string
+  
+}
