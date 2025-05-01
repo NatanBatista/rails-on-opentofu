@@ -1,0 +1,64 @@
+name: Deploy IaC com OpenTofu
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  plan:
+    name: OpenTofu Plan
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      TF_VAR_container_image: ${{ secrets.TF_VAR_CONTAINER_IMAGE }}
+      TF_VAR_rails_master_key: ${{ secrets.TF_VAR_RAILS_MASTER_KEY }}
+
+    steps:
+      - name: Clonar o repositório
+        uses: actions/checkout@v3
+
+      - name: Instalar OpenTofu
+        run: sudo snap install --classic opentofu
+
+      - name: Inicializar projeto
+        run: tofu init
+
+      - name: Verificar formatação
+        run: tofu fmt -check
+
+      - name: Validar sintaxe
+        run: tofu validate
+
+      - name: Executar plano de execução (plan)
+        run: tofu plan
+
+  apply:
+    name: OpenTofu Apply
+    needs: plan
+    runs-on: ubuntu-latest
+    environment:
+      name: Production  # 👈 exige aprovação manual se configurado no GitHub
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      TF_VAR_container_image: ${{ secrets.TF_VAR_CONTAINER_IMAGE }}
+      TF_VAR_rails_master_key: ${{ secrets.TF_VAR_RAILS_MASTER_KEY }}
+
+    steps:
+      - name: Clonar o repositório
+        uses: actions/checkout@v3
+
+      - name: Instalar OpenTofu
+        run: sudo snap install --classic opentofu
+
+      - name: Inicializar projeto
+        run: tofu init
+
+      - name: Aplicar alterações
+        run: tofu apply -auto-approve
